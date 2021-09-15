@@ -1,9 +1,5 @@
 import React, { useState } from 'react'
-import { TodoCounter } from "./components/TodoCounter";
-import { TodoSearch } from "./components/TodoSearch";
-import { TodoList } from "./components/TodoList";
-import { TodoItem } from "./components/TodoItem";
-import { CreateTodoButton } from "./components/CreateTodoButton";
+import { Layout } from './container/Layout';
 
 const defaultTodos = [
   { text: "Cortar cebolla", completed: false },
@@ -25,49 +21,34 @@ function App() {
     todo.text.toLowerCase().includes(searchValue.toLowerCase())
   ))
 
-    const completeTodos = (text) => {
-      const todoIndex = todos.findIndex(todo => todo.text === text)
+  const completeTodos = (text) => {
+    const todoIndex = todos.findIndex(todo => todo.text === text)
       
-      const newTodos = [...todos]
+    const newTodos = [...todos]
 
-      newTodos[todoIndex].completed = true
+    newTodos[todoIndex].completed = true
 
-      setTodos(newTodos)
-    }
+    setTodos(newTodos)
+  }
 
-    const deleteTodos = (text) => {
-      const todoIndex = todos.findIndex(todo => todo.text === text)
-      const newTodos = [...todos]
+  const deleteTodos = (text) => {
+    const todoIndex = todos.findIndex(todo => todo.text === text)
+    const newTodos = [...todos]
 
-      newTodos.splice(todoIndex, 1)
-      setTodos(newTodos)
-    }
+    newTodos.splice(todoIndex, 1)
+    setTodos(newTodos)
+  }
 
   return (
-    <>
-    <TodoCounter 
-      total={totalTodos}
-      completed={completedTodos}
-    />
-
-    <TodoSearch
+    <Layout 
+      totalTodos={totalTodos}
+      completedTodos={completedTodos}
       searchValue={searchValue}
       setSearchValue={setSearchValue}
-    
+      filterTodos={filterTodos}
+      completeTodos={completeTodos}
+      deleteTodos={deleteTodos}  
     />
-    <TodoList>
-        {filterTodos.map((item, i) => (
-          <TodoItem 
-            key={i} 
-            text={item.text} 
-            completed={item.completed} 
-            onComplete={() => completeTodos(item.text)}
-            deleteTodos={() => deleteTodos(item.text)}
-          />
-        ))}
-    </TodoList>
-    <CreateTodoButton />
-    </>
   );
 }
 
