@@ -25,6 +25,24 @@ function App() {
     todo.text.toLowerCase().includes(searchValue.toLowerCase())
   ))
 
+    const completeTodos = (text) => {
+      const todoIndex = todos.findIndex(todo => todo.text === text)
+      
+      const newTodos = [...todos]
+
+      newTodos[todoIndex].completed = true
+
+      setTodos(newTodos)
+    }
+
+    const deleteTodos = (text) => {
+      const todoIndex = todos.findIndex(todo => todo.text === text)
+      const newTodos = [...todos]
+
+      newTodos.splice(todoIndex, 1)
+      setTodos(newTodos)
+    }
+
   return (
     <>
     <TodoCounter 
@@ -39,7 +57,13 @@ function App() {
     />
     <TodoList>
         {filterTodos.map((item, i) => (
-          <TodoItem key={i} {...item} />
+          <TodoItem 
+            key={i} 
+            text={item.text} 
+            completed={item.completed} 
+            onComplete={() => completeTodos(item.text)}
+            deleteTodos={() => deleteTodos(item.text)}
+          />
         ))}
     </TodoList>
     <CreateTodoButton />
