@@ -6,6 +6,8 @@ import { TodoItem } from "../components/TodoItem";
 import { CreateTodoButton } from "../components/CreateTodoButton";
 
 export const Layout = ({ 
+    error,
+    loading,
     totalTodos, 
     completedTodos, 
     searchValue, 
@@ -26,6 +28,9 @@ export const Layout = ({
         setSearchValue={setSearchValue}  
       />
       <TodoList>
+        {error && <p>Desespérate, hubo un error...</p>}
+        {loading && <p>Estamos cargando, no desesperes...</p>}
+        {(!loading && !filterTodos.length) && <p>¡Crea tu primer TODO!</p>}
         {filterTodos.map((item, i) => (
           <TodoItem 
             key={i} 

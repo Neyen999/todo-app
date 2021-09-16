@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Layout } from './container/Layout';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 const defaultTodos = [
   { text: "Cortar cebolla", completed: false },
@@ -7,9 +8,15 @@ const defaultTodos = [
   { text: "Llorar con la llorona", completed: false}
 ]
 
+
 function App() {
 
-  const [todos, setTodos] = useState(defaultTodos)
+  const {
+    item: todos, 
+    saveItem: saveTodos,
+    loading,
+    error
+  } = useLocalStorage('TODOS_V1', []);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -21,6 +28,7 @@ function App() {
     todo.text.toLowerCase().includes(searchValue.toLowerCase())
   ))
 
+
   const completeTodos = (text) => {
     const todoIndex = todos.findIndex(todo => todo.text === text)
       
@@ -28,7 +36,7 @@ function App() {
 
     newTodos[todoIndex].completed = true
 
-    setTodos(newTodos)
+    saveTodos(newTodos)
   }
 
   const deleteTodos = (text) => {
@@ -36,11 +44,13 @@ function App() {
     const newTodos = [...todos]
 
     newTodos.splice(todoIndex, 1)
-    setTodos(newTodos)
+    saveTodos(newTodos)
   }
 
   return (
-    <Layout 
+    <Layout
+      error={error}
+      loading={loading} 
       totalTodos={totalTodos}
       completedTodos={completedTodos}
       searchValue={searchValue}
