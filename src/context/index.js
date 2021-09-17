@@ -10,9 +10,10 @@ const TodoProvider = ({children}) => {
     saveItem: saveTodos,
     loading,
     error
-  } = useLocalStorage('TODOS_V1', []);
+  } = useLocalStorage('TODOS_V1', [])
 
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState("")
+  const [openModal, setOpenModal] = useState(false)
 
   const completedTodos = todos.filter(todo => !!todo.completed).length; // !! Quiere decir doble falso, osea true
   const totalTodos = todos.length;
@@ -21,6 +22,19 @@ const TodoProvider = ({children}) => {
   const filterTodos = todos.filter((todo) => (
     todo.text.toLowerCase().includes(searchValue.toLowerCase())
   ))
+
+
+  const addTodo = (text) => {
+      
+    const newTodos = [...todos]
+
+    newTodos.push({
+      completed: false,
+      text: text
+    })
+
+    saveTodos(newTodos)
+  }
 
 
   const completeTodos = (text) => {
@@ -50,8 +64,11 @@ const TodoProvider = ({children}) => {
       searchValue,
       setSearchValue,
       filterTodos,
+      addTodo,
       completeTodos,
-      deleteTodos
+      deleteTodos,
+      openModal,
+      setOpenModal
     }}>
       {children}
     </Context.Provider>
