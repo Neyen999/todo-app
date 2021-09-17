@@ -47,3 +47,7 @@
 .Icon-delete:hover {
   color: red;
 }
+
+.Icon-container--completed:hover {
+  color: #4caf50;
+}

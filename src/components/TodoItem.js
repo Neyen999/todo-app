@@ -1,5 +1,6 @@
 import React from 'react'
 import '../styles/TodoItem.css'
+import { TodoIcon } from './TodoIcon'
 
 export const TodoItem = ({ text, completed, onComplete, deleteTodos }) => {
 
@@ -9,12 +10,12 @@ export const TodoItem = ({ text, completed, onComplete, deleteTodos }) => {
       <span 
         className={`Icon Icon-check ${completed && 'Icon-check--active' }`}
         onClick={onComplete}
-      >V</span>
+      ><TodoIcon type="completed"/></span>
       <p className={`TodoItem-p ${completed && 'TodoItem-p--complete'}`}>{text}</p>
       <span 
         className="Icon Icon-delete"
         onClick={deleteTodos}  
-      >X</span>
+      ><TodoIcon type="delete"/></span>
     </li>
   )
 }

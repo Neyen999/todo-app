@@ -8,6 +8,8 @@ import { TodoForm } from '../components/TodoForm';
 import { CreateTodoButton } from "../components/CreateTodoButton";
 import { Modal } from '../modal';
 
+import { TodosError, TodosLoading, TodosEmpty } from '../components/TodosStates';
+
 export const Layout = () => {
 
   const {
@@ -26,9 +28,9 @@ export const Layout = () => {
 
       <TodoSearch />
       <TodoList>
-        {error && <p>Desespérate, hubo un error...</p>}
-        {loading && <p>Estamos cargando, no desesperes...</p>}
-        {(!loading && !filterTodos.length) && <p>¡Crea tu primer TODO!</p>}
+        {error && <TodosError />}
+        {loading && <TodosLoading />}
+        {(!loading && !filterTodos.length) && <TodosEmpty />}
         {filterTodos.map((item, i) => (
           <TodoItem 
             key={i} 

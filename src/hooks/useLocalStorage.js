@@ -29,7 +29,7 @@ export const useLocalStorage = (itemName, initialValue) => {
         setError(error)
       }
 
-    }, 1000)
+    }, 5000)
 
   }, [])
 
